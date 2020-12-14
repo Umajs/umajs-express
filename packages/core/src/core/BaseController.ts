@@ -41,7 +41,7 @@ export class BaseController implements BaseContext {
     }
 
     get param() {
-        return this.ctx.param;
+        return this.ctx.req.params;
     }
 
     setHeader(name: string | any, value: string | string[]): void {

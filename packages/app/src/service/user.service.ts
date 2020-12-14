@@ -1,4 +1,4 @@
-import { Inject, BaseService } from '@umajs/core';
+import { Inject, BaseService } from '@umajs-express/core';
 import User from '../model/User';
 
 export default class extends BaseService {

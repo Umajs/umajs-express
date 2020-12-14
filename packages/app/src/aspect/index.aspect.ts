@@ -1,4 +1,4 @@
-import { IAspect, IJoinPoint } from '@umajs/core';
+import { IAspect, IJoinPoint } from '@umajs-express/core';
 
 import IndexController from '../controller/index.controller';
 

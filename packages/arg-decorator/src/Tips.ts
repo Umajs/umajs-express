@@ -1,4 +1,4 @@
-import Uma, { Result, mixin } from '@umajs/core';
+import Uma, { Result, mixin } from '@umajs-express/core';
 
 import { IArgErrorTip } from './type';
 /* eslint-disable @typescript-eslint/no-unused-vars */

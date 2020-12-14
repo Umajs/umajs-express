@@ -1,9 +1,9 @@
-import * as Koa from 'koa';
-
+import * as Cookies from 'cookies';
 import { IRequest } from './IRequest';
 import { IResponse } from './IResponse';
 
 export interface BaseContext {
+    cookies?: Cookies;
     /**
      * 发送内容
      * @param data 内容
@@ -29,12 +29,16 @@ export interface BaseContext {
      * @param viewPath 模板地址
      * @param locals 变量
      */
-    view(viewPath: string, locals?: any): Promise<any>;
+    view(viewPath: string, locals?: any): void;
 
     /**
      * userAgent
      */
     userAgent: string;
+
+    status?:any;
+
+    body?:any
 
     /**
      * 路由参数
@@ -53,9 +57,15 @@ export interface BaseContext {
      * @param name header 名称
      */
     getHeader(name: string | any): any;
+    get?: IRequest['get'] | any;
+    set?: IResponse['set'] | any;
+
 }
 
-export interface IContext extends Koa.Context, BaseContext {
-    request: IRequest;
-    response: IResponse;
+export interface IContext extends BaseContext {
+    request?: IRequest;
+    req?: IRequest;
+    response?: IResponse;
+    res?: IResponse;
+    [key: string]: any
 }

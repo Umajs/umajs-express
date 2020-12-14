@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { BaseController, Path, Private, Param, Query, RequestMethod, Aspect, Service, Result } from '@umajs/core';
-import { Get, Post } from '@umajs/path';
-import { RequestFile } from '@umajs/arg-decorator';
+import { BaseController, Path, Private, Param, Query, RequestMethod, Aspect, Service, Result } from '@umajs-express/core';
+import { Get, Post } from '@umajs-express/path';
+import { RequestFile } from '@umajs-express/arg-decorator';
 import TestService from '../service/test.service';
 import { AgeCheck } from '../decorator/AgeCheck';
 import UserService from '../service/user.service';
@@ -43,6 +43,7 @@ export default class Index extends BaseController {
         console.log(this.ctx.get('myappend'));
         this.ctx.cookies.set('name','zdj');
         this.ctx.cookies.set('name1','zdj1');
+        this.ctx.status = 403;
         return Result.send('this is home router! '+this.getHeader('Cache-Control'));
     }
 

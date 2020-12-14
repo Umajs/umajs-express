@@ -1,4 +1,4 @@
-# @umajs/core
+# @umajs-express/core
 
 ## 特性
 

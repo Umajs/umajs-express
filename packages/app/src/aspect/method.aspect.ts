@@ -1,4 +1,4 @@
-import { IAspect, IJoinPoint, IProceedJoinPoint, Result } from '@umajs/core';
+import { IAspect, IJoinPoint, IProceedJoinPoint, Result } from '@umajs-express/core';
 
 export default class implements IAspect {
     before() {

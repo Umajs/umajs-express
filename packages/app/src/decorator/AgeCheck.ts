@@ -1,4 +1,4 @@
-import { createArgDecorator, Result, IContext } from '@umajs/core';
+import { createArgDecorator, Result, IContext } from '@umajs-express/core';
 
 /**
  * 1、参数的聚合 Entity

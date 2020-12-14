@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as request from 'supertest';
-import { Uma, IResponse } from '@umajs/core';
+import { Uma, IResponse } from '@umajs-express/core';
 
 import { Router } from '../../../src/index';
 

@@ -1,5 +1,3 @@
-import * as send from 'koa-send';
-
 import { IContext } from '../types/IContext';
 import { DOWNLOAD_PATH, VIEW_PATH, CALLBACK_FIELD } from '../info/UniqueKey';
 
@@ -23,11 +21,11 @@ export type TResultStreamData = {
     data: any,
 }
 
-export interface TResultDownData extends send.SendOptions {
+export interface TResultDownData {
     [DOWNLOAD_PATH]: string
 }
 
-export type TResultRedirectData = { url: string, alt?: string };
+export type TResultRedirectData = { url: string, status?: number };
 
 export interface IResults {
     done: (ctx: IContext, data: any) => void;

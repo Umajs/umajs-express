@@ -1,4 +1,4 @@
-import Uma, { IContext, TPlugin } from '@umajs/core';
+import Uma, { IContext, TPlugin } from '@umajs-express/core';
 
 import Crypto from './crypto';
 import { ICrypto } from './types/ICrypto';

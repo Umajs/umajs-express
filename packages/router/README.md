@@ -1,4 +1,4 @@
-# @umajs/router
+# @umajs-express/router
 
 ### Usage
 

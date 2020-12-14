@@ -1,4 +1,4 @@
-import { BaseController, Result, Path } from '@umajs/core';
+import { BaseController, Result, Path } from '@umajs-express/core';
 
 export default class Index extends BaseController {
     index() {

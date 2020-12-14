@@ -1,4 +1,4 @@
-# @umajs/cli
+# @umajs-express/cli
 
 ### Usage
 

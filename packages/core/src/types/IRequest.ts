@@ -1,14 +1,18 @@
-import * as Koa from 'koa';
 import { Files } from 'formidable';
+import * as Application from 'express';
+import * as Cookies from 'cookies';
 
 import { IContext } from './IContext';
 import { IResponse } from './IResponse';
 
-export interface BaseRequest {}
+export interface BaseRequest {
 
-export interface IRequest extends Koa.Request, BaseRequest {
+}
+
+export interface IRequest extends Application.Request, BaseRequest {
     ctx: IContext,
     response: IResponse,
-    body?: any;
+    cookies:Cookies
+    body: any;
     files?: Files;
 }

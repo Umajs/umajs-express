@@ -1,5 +1,4 @@
 import * as stream from 'stream';
-import * as send from 'koa-send';
 
 import { CALLBACK_FIELD, VIEW_PATH, DOWNLOAD_PATH } from '../info/UniqueKey';
 import { Results } from '../extends/Results';
@@ -70,7 +69,7 @@ export default class Result<T = any> implements IResult {
         });
     }
 
-    static download(filePath: string, opts?: send.SendOptions) {
+    static download(filePath: string, opts?: any) {
         return new Result({
             type: 'download',
             data: {
@@ -80,12 +79,12 @@ export default class Result<T = any> implements IResult {
         });
     }
 
-    static redirect(url: string, alt?: string) {
+    static redirect(url: string, status?: number) {
         return new Result({
             type: 'redirect',
             data: {
                 url,
-                alt,
+                status,
             },
         });
     }

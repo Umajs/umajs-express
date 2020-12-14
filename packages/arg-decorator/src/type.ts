@@ -1,4 +1,4 @@
-import { IContext } from '@umajs/core';
+import { IContext } from '@umajs-express/core';
 
 export type IArgErrorTip = {
     key:string, // 修饰参数属性名称

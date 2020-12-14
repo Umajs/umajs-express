@@ -1,5 +1,5 @@
-import { BaseController, Result, Path, RequestMethod } from '@umajs/core';
-import { Require, ToNumber, Body, Equals, Headers, Cookies, RequestFile, RequestParam } from "@umajs/arg-decorator";
+import { BaseController, Result, Path, RequestMethod } from '@umajs-express/core';
+import { Require, ToNumber, Body, Equals, Headers, Cookies, RequestFile, RequestParam } from "@umajs-express/arg-decorator";
 let { isRequire } = Body;
 type user = {
     userId: string,

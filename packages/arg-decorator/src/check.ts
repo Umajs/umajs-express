@@ -1,4 +1,4 @@
-import { IContext } from '@umajs/core';
+import { IContext } from '@umajs-express/core';
 import validator from 'validator';
 import Tips from './Tips';
 

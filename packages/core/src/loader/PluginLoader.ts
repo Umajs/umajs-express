@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as compose from 'koa-compose';
+import { compose } from 'compose-middleware';
 
 import Uma from '../core/Uma';
 import mixin from '../utils/mixin';
@@ -9,7 +9,6 @@ import Require from '../utils/Require';
 
 import { TPluginConfig } from '../types/TPluginConfig';
 import { TPlugin } from '../types/TPlugin';
-import { IContext } from '../types/IContext';
 import { Results } from '../extends/Results';
 
 export default class PluginLoader {
@@ -41,30 +40,26 @@ export default class PluginLoader {
         for (const key of Object.keys(plugin)) {
             const val = plugin[key];
 
-            if (key === 'request') {
-                mixin(false, uma.app.request, val);
-            } else if (key === 'response') {
-                mixin(false, uma.app.response, val);
-            } else if (key === 'context') {
+            if (key === 'context') {
                 mixin(false, uma.context, val);
             } else if (key === 'results') {
                 mixin(false, Results, val);
             } else if (key === 'use') {
                 const { handler } = val;
 
-                mws.push((ctx: IContext, next: Function) => handler(ctx, next, options));
+                mws.push((req, res, next: Function) => handler(req, res, next, options));
             } else if (key === 'filter') {
                 const { regexp = /.*/, handler } = val;
 
-                mws.push((ctx: IContext, next: Function) => (regexp.test(ctx.url) ? handler(ctx, next, options) : next()));
+                mws.push((req, res, next: Function) => (regexp.test(req.url) ? handler(req, res, next, options) : next()));
             } else if (key === 'ignore') {
                 const { regexp = /.*/, handler } = val;
 
-                mws.push((ctx: IContext, next: Function) => (!regexp.test(ctx.url) ? handler(ctx, next, options) : next()));
+                mws.push((req, res, next: Function) => (!regexp.test(req.url) ? handler(req, res, next, options) : next()));
             } else if (key === 'method') {
                 const { type, handler } = val;
 
-                mws.push((ctx: IContext, next: Function) => (type.indexOf(ctx.method) > -1 ? handler(ctx, next, options) : next()));
+                mws.push((req, res, next: Function) => (type.indexOf(req.method) > -1 ? handler(req, res, next, options) : next()));
             }
         }
 
@@ -119,7 +114,7 @@ export default class PluginLoader {
                 continue;
             }
 
-            const packageName = config.packageName || `@umajs/plugin-${name}`;
+            const packageName = config.packageName || `@umajs-express/plugin-${name}`;
             let isDirExist = false;
 
             for (const dir of dirs) {

@@ -1,10 +1,11 @@
 import { CALLBACK_FIELD, VIEW_PATH, DOWNLOAD_PATH } from '../info/UniqueKey';
 import { IContext } from '../types/IContext';
 import { IResults, TResultStreamData, TResultRedirectData, TResultDownData, TResultViewData, TResultJsonData, TResultJsonpData } from '../types/IResult';
-import LazyModules from '../loader/LazyModules';
+// import LazyModules from '../loader/LazyModules';
 
 export const Results: IResults = {
-    done() {
+    done(ctx: IContext) {
+        return ctx.res.end();
     },
     send(ctx: IContext, data: any) {
         return ctx.send(data);
@@ -25,20 +26,21 @@ export const Results: IResults = {
     stream(ctx: IContext, data: TResultStreamData) {
         const { data: streamData, fileName } = data;
 
-        if (fileName) ctx.attachment(fileName);
+        if (fileName) ctx.response.attachment(fileName);
 
-        ctx.body = streamData;
+        return ctx.res.send(streamData);
     },
     download(ctx: IContext, data: TResultDownData) {
         const { [DOWNLOAD_PATH]: downloadPath, ...downloadOpts } = data;
 
-        if (!ctx.type && !ctx.get('Content-Disposition')) ctx.attachment(downloadPath);
+        if (!ctx.response.type && !ctx.response.get('Content-Disposition')) ctx.response.attachment(downloadPath);
 
-        return LazyModules.send(ctx, downloadPath, downloadOpts);
+        return ctx.res.sendFile(downloadPath, downloadOpts);
+        // return LazyModules.send(ctx, downloadPath, downloadOpts);
     },
     redirect(ctx: IContext, data: TResultRedirectData) {
-        const { url, alt } = data;
+        const { url, status = 302 } = data;
 
-        return ctx.redirect(url, alt);
+        return ctx.res.redirect(status, url);
     },
 };

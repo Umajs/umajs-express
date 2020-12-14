@@ -1,5 +1,5 @@
 import * as pathToRegexp from 'path-to-regexp';
-import Uma, { IContext, TControllerInfo, TMethodInfo, callMethod } from '@umajs/core';
+import Uma, { IRequest, IResponse, TControllerInfo, TMethodInfo, callMethod } from '@umajs-express/core';
 
 import { TPathInfo } from './types/TPathInfo';
 import { replaceTailSlash } from './helper';
@@ -98,9 +98,9 @@ export const Router = () => {
         return false;
     }
 
-    return function router(ctx: IContext, next: Function) {
-        const { method: methodType } = ctx.request;
-        const reqPath = replaceTailSlash(ctx.request.path) || '/';
+    return function router(req:IRequest, res:IResponse, next: Function) {
+        const { method: methodType } = req;
+        const reqPath = replaceTailSlash(req.path) || '/';
 
         // 先匹配静态路由(routerPath + methodPath)，地址和静态路由完全匹配时
         const staticResult = StaticRouterMap.get(reqPath);
@@ -108,7 +108,7 @@ export const Router = () => {
         if (staticResult && (!staticResult.methodTypes || staticResult.methodTypes.indexOf(methodType) > -1)) {
             const { clazz, methodName } = staticResult;
 
-            return callMethod(clazz, methodName, {}, ctx, next);
+            return callMethod(clazz, methodName, {}, req, res, next).catch((err) => { next(err); });
         }
 
         // 静态路由没有匹配项后匹配正则路由(routerPath + methodPath)
@@ -117,7 +117,7 @@ export const Router = () => {
         if (regexpResult && (!regexpResult.methodTypes || regexpResult.methodTypes.indexOf(methodType) > -1)) {
             const { clazz, methodName, params = {} } = regexpResult;
 
-            return callMethod(clazz, methodName, params, ctx, next);
+            return callMethod(clazz, methodName, params, req, res, next).catch((err) => { next(err); });
         }
 
         // 上面都没有走默认路由(controllerName + methodName)
@@ -146,6 +146,6 @@ export const Router = () => {
         // if is inside or has path decorator, return
         if (methodInfo && (methodInfo.inside || (methodInfo.paths && methodInfo.paths.length))) return next();
 
-        return callMethod(clazz, methodName, {}, ctx, next);
+        return callMethod(clazz, methodName, {}, req, res, next).catch((err) => { next(err); });
     };
 };

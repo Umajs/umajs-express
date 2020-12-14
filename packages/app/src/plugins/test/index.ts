@@ -1,4 +1,4 @@
-import { IContext, TPlugin, RequestMethod, Result as R } from "@umajs/core";
+import { IContext, IRequest, IResponse, TPlugin, RequestMethod, Result as R } from "@umajs-express/core";
 
 export class Result extends R {
     static redirect2(url: string, status: number) {
@@ -21,13 +21,13 @@ export default (): TPlugin => {
             redirect(ctx: IContext, data: any) {
                 const { url, status } = data;
 
-                ctx.status = status;
+                ctx.res.status(status);
 
-                return ctx.redirect(url);
+                return ctx.res.redirect(url);
             },
         },
         use: {
-            async handler(ctx: IContext, next: Function) {
+            async handler(req:IRequest, res:IResponse,next: Function) {
                 console.log('use before');
                 await next();
                 console.log('use after');
@@ -35,7 +35,7 @@ export default (): TPlugin => {
         },
         method: {
             type: RequestMethod.GET,
-            async handler(ctx: IContext, next: Function) {
+            async handler(req:IRequest, res:IResponse,next: Function) {
                 console.log('method get before');
                 await next();
                 console.log('method get after');

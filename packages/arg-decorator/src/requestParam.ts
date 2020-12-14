@@ -4,7 +4,7 @@
  * @Last Modified by: zhang dajia
  * @Last Modified time: 2020-11-26 17:37:56
  */
-import { createArgDecorator, IContext, RequestMethod } from '@umajs/core';
+import { createArgDecorator, IContext, RequestMethod } from '@umajs-express/core';
 import { fn as getBody } from './body';
 import { fn as getQuery } from './index';
 

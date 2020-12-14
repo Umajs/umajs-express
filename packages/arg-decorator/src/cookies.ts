@@ -4,7 +4,7 @@
  * @Last Modified by: zhang dajia
  * @Last Modified time: 2020-11-26 16:20:15
  */
-import { createArgDecorator, IContext } from '@umajs/core';
+import { createArgDecorator, IContext } from '@umajs-express/core';
 
 /** 装饰器 Cookies
  * @Cookies(key:string)

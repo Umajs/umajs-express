@@ -1,4 +1,4 @@
-import { createArgDecorator, IContext } from '@umajs/core';
+import { createArgDecorator, IContext } from '@umajs-express/core';
 
 import Check from './check';
 

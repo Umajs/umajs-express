@@ -1,4 +1,4 @@
-import { BaseController, Path, Private, Result } from '@umajs/core';
+import { BaseController, Path, Private, Result } from '@umajs-express/core';
 
 @Path('/tpl')
 export default class Template extends BaseController {

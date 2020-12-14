@@ -1,5 +1,5 @@
 {
-  "name": "@umajs/plugin-views",
+  "name": "@umajs-express/plugin-views",
   "version": "1.1.5",
   "description": "umajs views, template",
   "author": "zhangzhihua <zzh627@126.com>",
@@ -28,16 +28,14 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "koa-views": "^6.3.1"
+    "consolidate": "^0.16.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.24",
-    "@types/koa": "^2.0.51",
-    "@types/koa-views": "^2.0.4",
     "@types/node": "^10.12.15",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
-    "@umajs/core": "^1.1.5",
+    "@umajs-express/core": "^1.1.5",
     "eslint": "^7.0.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
@@ -45,7 +43,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-watch": "^6.0.1",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "nunjucks": "^3.2.2",
+    "pug": "^3.0.0"
   },
   "repository": {
     "type": "git",

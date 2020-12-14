@@ -1,4 +1,4 @@
-import { Result } from '@umajs/core';
+import { Result } from '@umajs-express/core';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export default {

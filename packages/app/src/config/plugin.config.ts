@@ -1,7 +1,6 @@
-import { TPluginConfig } from '@umajs/core';
+import { TPluginConfig } from '@umajs-express/core';
 
 export default <{[key: string]: TPluginConfig}>{
-    'status': true,
     'session': true,
     'i18n': {
         enable: true,

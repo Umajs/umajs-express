@@ -1,4 +1,4 @@
-import { createArgDecorator, IContext } from '@umajs/core';
+import { createArgDecorator, IContext } from '@umajs-express/core';
 
 import { TbodyDecorator } from './type';
 import Check from './check';

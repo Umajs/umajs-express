@@ -1,5 +1,5 @@
 import * as path from 'path';
-import * as Koa from 'koa';
+import * as Express from 'express';
 import * as chokidar from 'chokidar';
 import Log from '../utils/log';
 import Require from '../utils/Require';
@@ -45,7 +45,7 @@ export default function reload() {
             log.warn('Manual Restart To Update: %s has been modified', p);
         } else {
             uma.server.close();
-            uma.app = new Koa();
+            uma.app = Express();
             uma.start();
             log.info('Restart: %s has been modified', p);
         }

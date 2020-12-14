@@ -4,12 +4,12 @@
 
 ## 使用
 
-> 安装 `npm install -S @umajs/arg-decorator`
+> 安装 `npm install -S @umajs-express/arg-decorator`
 
 ## 示例
 
 ```ts
-import { ToNumber, Body } from '@umajs/arg-decorator';
+import { ToNumber, Body } from '@umajs-express/arg-decorator';
 
 // url参数类型修饰校验
 @Path('/saveUser')
@@ -62,7 +62,7 @@ saveUser(@Body.ToNumber('age') age: number){
 ## 自定义校验提示内容
 框架默认修饰器提示信息可以通过配置文件`src/config/argDecorator.config.ts`进行覆盖。通过`Result`模块用户可以自定义校验失败时返回的数据格式或者方式，比如json,或者状态码。
 ```ts
-import { Result } from '@umajs/core';
+import { Result } from '@umajs-express/core';
 
 export default {
     Require: {

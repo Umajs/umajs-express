@@ -1,9 +1,9 @@
 import * as path from 'path';
 import * as request from 'supertest';
-import { Uma, IResponse } from '@umajs/core';
-import { Router } from '@umajs/router';
+import { Uma, IResponse } from '@umajs-express/core';
+import { Router } from '@umajs-express/router';
 
-import session from '../../../src/';
+import session from '../../../src';
 
 const uma = Uma.instance({
     Router,
@@ -15,7 +15,7 @@ export const start = () => new Promise((resolve, reject) => {
         key: 'uma:sess',
         maxAge: 1000000,
         secret: 'uma:sess',
-        overwrite: true
+        overwrite: true,
     });
 
     Object.defineProperty(uma.context, 'session', {
@@ -36,7 +36,7 @@ export const stop = () => new Promise((resolve, reject) => {
 });
 
 export const send = (path: string): any => new Promise((resolve, reject) => {
-    const req = request(uma.app.listen())
+    const req = request(uma.app.callback());
 
     req.get(path)
         .end((err: Error, res: IResponse) => {
@@ -51,7 +51,7 @@ export const send = (path: string): any => new Promise((resolve, reject) => {
 });
 
 export const post = (path: string, data?: Object): any => new Promise((resolve, reject) => {
-    request(uma.app.listen())
+    request(uma.app.callback())
         .post(path)
         .send(data)
         .end((err: Error, res: Response) => {
@@ -59,7 +59,6 @@ export const post = (path: string, data?: Object): any => new Promise((resolve, 
             resolve(res);
         });
 });
-
 
 // start().then(async () => {
 //     const result = await send('/');

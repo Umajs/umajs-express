@@ -1,4 +1,4 @@
-import { BaseController, Path, RequestMethod, Result } from '@umajs/core';
+import { BaseController, Path, RequestMethod, Result } from '@umajs-express/core';
 import { Body, RequestParam } from '../../../../src/index';
 
 type user = {

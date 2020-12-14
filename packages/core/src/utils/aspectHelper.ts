@@ -1,4 +1,4 @@
-import * as Koa from 'koa';
+// import * as Express from 'express';
 
 import AspectLoader from '../loader/AspectLoader';
 
@@ -6,7 +6,7 @@ import { ENotice } from '../types/ENotice';
 import { IJoinPoint } from '../types/IJoinPoint';
 import { IProceedJoinPoint } from '../types/IProceedJoinPoint';
 import Result from '../core/Result';
-import { IContext } from '../types/IContext';
+// import { IContext } from '../types/IContext';
 import { IAspect } from '../types/IAspect';
 
 /**
@@ -19,7 +19,7 @@ import { IAspect } from '../types/IAspect';
  *      }
  * @param mw 中间件
  */
-export function middlewareToAround(middleware: (Koa.Middleware<any, IContext>)) {
+export function middlewareToAround(middleware: (any)) {
     return ({ target, proceed, args }: IProceedJoinPoint): Promise<Result> => middleware(target.ctx, () => proceed(...args));
 }
 

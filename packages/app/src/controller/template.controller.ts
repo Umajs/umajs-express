@@ -1,5 +1,5 @@
-import { BaseController, Path, Aspect, Query, Param, RequestMethod } from '@umajs/core';
-import { Post } from '@umajs/path';
+import { BaseController, Path, Aspect, Query, Param, RequestMethod } from '@umajs-express/core';
+import { Post } from '@umajs-express/path';
 import { AgeCheck } from '../decorator/AgeCheck';
 import { Result } from '../plugins/test/index';
 
@@ -37,6 +37,11 @@ export default class Template extends BaseController {
     @Path('/jsonp')
     jsonpDemo() {
         return this.jsonp({ data: 123 });
+    }
+
+    @Path('/json')
+    jsonDemo() {
+        return this.json({ data: 123 });
     }
 
     @Path('/r')

@@ -1,7 +1,9 @@
-import Result from '../core/Result';
-import { IContext } from '../types/IContext';
-import ControllerInfo from '../info/controllerInfo';
+import { IRequest } from '../types/IRequest';
+import { IResponse } from '../types/IResponse';
 import { TMethodInfo } from '../types/TMethodInfo';
+
+import Result from '../core/Result';
+import ControllerInfo from '../info/controllerInfo';
 
 /**
  * 调用方法
@@ -12,8 +14,9 @@ import { TMethodInfo } from '../types/TMethodInfo';
  * @param next
  * @param methodType 调用方式
  */
-export async function callMethod(clazz: Function, methodName: string, param: object, ctx: IContext, next: Function) {
+export async function callMethod(clazz: Function, methodName: string, param: object, req:IRequest, res:IResponse, next: Function) {
     const clazzInfo = ControllerInfo.get(clazz);
+    const { ctx } = req;
 
     if (!clazzInfo) return next();
 

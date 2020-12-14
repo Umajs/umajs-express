@@ -1,10 +1,17 @@
-import * as Koa from 'koa';
-import * as koaStatic from 'koa-static';
+import * as Express from 'express';
 
-export type staticOptions = koaStatic.Options;
+export type staticOptions = {
+    dotfiles: string,
+    etag: boolean,
+    extensions: Array<string>,
+    index: boolean,
+    maxAge: string,
+    redirect: boolean,
+    setHeaders: (res: Express.Response, path: string, stat: any) => any
+  };
 
-export default (uma: any, options: { root: string, opts?: staticOptions }): Koa.Middleware => {
+export default (uma: any, options: { root: string, opts?: staticOptions }): Express.Handler => {
     const { root = './static', opts } = options;
 
-    return koaStatic(root, opts);
+    return Express.static(root, opts);
 };

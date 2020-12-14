@@ -1,8 +1,9 @@
-import * as Koa from 'koa';
+import * as Express from 'express';
 import * as path from 'path';
 import * as http from 'http';
 import * as https from 'https';
-import * as bodyParser from 'koa-body';
+import * as bodyParser from 'body-parser';
+import * as Cookies from 'cookies';
 
 import AspectLoader from '../loader/AspectLoader';
 import ControllerLoader from '../loader/ControllerLoader';
@@ -12,22 +13,24 @@ import ConfigLoader from '../loader/ConfigLoader';
 import PluginLoader from '../loader/PluginLoader';
 import controllerInfo from '../info/controllerInfo';
 import { packageInfo } from '../info/packageInfo';
-
 import { Context } from '../extends/Context';
-import { Request } from '../extends/Request';
-import { Response } from '../extends/Response';
+import { crateContext } from '../core/context';
+
 import typeHelper from '../utils/typeHelper';
 import mixin from '../utils/mixin';
-import { TUmaOption } from '../types/TUmaOption';
+import { TUmaOption, TUmaApp } from '../types/TUmaOption';
 import { IContext } from '../types/IContext';
+
 import { TConfig } from '../types/TConfig';
 import { TControllerInfo } from '../types/TControllerInfo';
 import { TPluginConfig } from '../types/TPluginConfig';
+import { IRequest } from '../types/IRequest';
+import { IResponse } from '../types/IResponse';
 
 let instance: Uma = null;
 
 export default class Uma {
-    private constructor(readonly options: TUmaOption, app?: Koa<Koa.DefaultState, IContext>) {
+    private constructor(readonly options: TUmaOption, app?:Express.Application) {
         console.assert(options && options.ROOT, `Uma options.ROOT must set value. e.g { ROOT: './src' }, now ${JSON.stringify(options)}`);
 
         this.options = mixin(true, {
@@ -37,20 +40,17 @@ export default class Uma {
             strictDir: false,
         }, options);
 
-        const { env, proxy, subdomainOffset } = this.options;
+        const { env } = this.options;
 
         process.env.NODE_ENV = env;
 
         this.env = env;
-        this.app = app || new Koa();
-
-        if (proxy) this.app.proxy = proxy;
-        if (subdomainOffset) this.app.subdomainOffset = subdomainOffset;
+        this.app = app || Express();
     }
 
     env: string;
 
-    app: Koa<Koa.DefaultState, IContext> = null;
+    app: TUmaApp = null;
 
     server: http.Server | https.Server;
 
@@ -109,26 +109,20 @@ export default class Uma {
 
     async loadPlugin() {
         if (this.options.bodyParser) {
-            this.app.use((ctx, next) => {
-                if (['POST', 'PUT', 'PATCH'].indexOf(ctx.method) > -1) {
-                    const bodyParserOpts = mixin(false, { multipart: true }, this.options.bodyParser);
-
-                    return Reflect.apply(bodyParser(bodyParserOpts), null, [ctx, next]);
-                }
-
-                return next();
-            });
+            this.app.use(bodyParser.urlencoded({ extended: false }));
+            // parse application/json
+            this.app.use(bodyParser.json(this.options.jsonpBody));
         }
 
         await PluginLoader.loadDir(this.options.ROOT);
     }
 
-    use(mw: Koa.Middleware<any, IContext>) {
+    use(mw: Express.Handler) {
         this.app.use(mw);
     }
 
     get context(): IContext {
-        return this.app.context;
+        return Context;
     }
 
     async start(port: number = 8058, callback?: Function) {
@@ -137,14 +131,10 @@ export default class Uma {
 
         const { app, options: { createServer, Router, beforeLoad, afterLoaded } } = this;
 
-        mixin(false, app.request, Request);
-        mixin(false, app.response, Response);
-        mixin(false, app.context, Context);
-
         if (typeHelper.isFunction(beforeLoad)) await Promise.resolve(Reflect.apply(beforeLoad, this, [this]));
 
         await this.load();
-
+        this.use(Cookies.express(['keyboard umajs']));
         this.use(Router());
 
         if (typeHelper.isFunction(afterLoaded)) await Promise.resolve(Reflect.apply(afterLoaded, this, [this]));
@@ -153,10 +143,22 @@ export default class Uma {
             console.assert(typeHelper.isFunction(createServer), 'config.createServer must be a function');
         }
 
-        const koaCallback = app.callback();
+        app.callback = () => {
+            const umaApp = app;
 
-        this.server = createServer ? createServer(koaCallback) : http.createServer(koaCallback);
+            return (req:IRequest, res:IResponse) => {
+                crateContext(req, res); // create ctx in req,res
+                umaApp(req, res);
+            };
+        }; // fix _tests_  use app.callback in umajs
 
+        this.server = createServer ? createServer(app) : http.createServer(app.callback());
+        this.app.use((req:IRequest) => {
+            const { ctx } = req;
+
+            ctx.status = 404;
+            ctx.body = 'Not Found';
+        });// 404 保持和umajs一致 兼容单元测试
         this.server.listen(this.port, async () => {
             console.log(`Uma server running at port: ${this.port} `);
             console.log(`Uma version: ${packageInfo.version}`);
@@ -170,7 +172,7 @@ export default class Uma {
     // static property start
     static version:string = packageInfo.version;
 
-    static use(mw: Koa.Middleware<any, IContext>) {
+    static use(mw: Express.Handler) {
         Uma.instance().use(mw);
     }
 
@@ -246,20 +248,21 @@ export default class Uma {
 
     /**
      * (async () => {
-     *     const app = new Koa();
+     *     const app = Express();
      *     app.use(await Uma.middleware({...}, app));
      * })();
      * @param options Uma options
-     * @param app Koa instance
+     * @param app Express instance
      */
-    static async middleware(options: TUmaOption, app: Koa): Promise<Koa.Middleware> {
+    static async middleware(options: TUmaOption, app: Express.Application): Promise<Express.Handler> {
         if (instance) throw new Error('Uma can only be instantiated once, app.use(Uma.middleware({...}))');
+        app.use(Cookies.express(['keyboard umajs']));
+        app.use((req:IRequest, res:IResponse, next:Function) => {
+            crateContext(req, res); // create ctx in req,res
+            next();
+        });
 
-        instance = new Uma(options, <Koa<Koa.DefaultState, IContext>>app);
-
-        mixin(false, app.request, Request);
-        mixin(false, app.response, Response);
-        mixin(false, app.context, Context);
+        instance = new Uma(options, app);
 
         await instance.load();
 

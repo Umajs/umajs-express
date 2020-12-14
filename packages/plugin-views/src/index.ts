@@ -1,11 +1,7 @@
-import Uma, { TPlugin } from '@umajs/core';
-import * as views from 'koa-views';
+import Uma, { TPlugin } from '@umajs-express/core';
+import * as cons from 'consolidate';
 
-type TKoaViewsOptions = {
-    /*
-    * autoRender the result into ctx.body, defaults to true
-    */
-    autoRender?: boolean,
+type TExpressViewsOptions = {
     /*
     * default extension for your views
     */
@@ -21,23 +17,43 @@ type TKoaViewsOptions = {
     /*
     * replace consolidate as default engine source
     */
-    engineSource?: any,
+    engineSource?: string,
 }
 
 export type viewsOptions = {
     root?: string,
-    opts?: TKoaViewsOptions,
+    opts?: TExpressViewsOptions,
 }
 
 export default (uma: Uma, options: viewsOptions = {}): TPlugin => {
-    const { root = './views', opts = {} } = options;
-    const render = views(root, opts)(null, null);
+    const { root = './views', opts = {
+        extension: 'html',
+        engineSource: 'pug',
+    } } = options;
+    const { app } = uma;
+
+    // assign the swig engine to .html files
+    opts.extension && app.engine(opts.extension, cons[opts.engineSource]);
+
+    // set .html as the default extension
+    opts.extension && app.set('view engine', opts.extension);
+    // eslint-disable-next-line prefer-destructuring
+    // eslint-disable-next-line no-mixed-operators
+    let render = opts.extension && cons[opts.engineSource].render || null;
+
+    // set other engin to other files
+    for (const key of Object.keys(opts.map)) {
+        const extension = key;
+        const engin = opts.map[key];
+
+        app.engine(extension, cons[engin]);
+        render = cons[engin].render;
+    }
+
+    app.set('views', root);
 
     return {
         context: {
-            render,
-        },
-        response: {
             render,
         },
     };

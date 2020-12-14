@@ -1,12 +1,12 @@
 import * as path from 'path';
 import * as request from 'supertest';
-import { Uma, IResponse } from '@umajs/core';
+import { Uma, IResponse } from '@umajs-express/core';
 
-import { Router } from '@umajs/router';
+import { Router } from '@umajs-express/router';
 
 const uma = Uma.instance({
     Router,
-    bodyParser: { multipart: true },
+    bodyParser: true,
     ROOT: path.join(__dirname, '../app'),
 });
 

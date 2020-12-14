@@ -1,4 +1,4 @@
-import { Resource } from '@umajs/core';
+import { Resource } from '@umajs-express/core';
 
 @Resource('Uma', 18)
 export default class User {

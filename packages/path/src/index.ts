@@ -1,4 +1,4 @@
-import { Path, RequestMethod } from '@umajs/core';
+import { Path, RequestMethod } from '@umajs-express/core';
 
 export const Get = (...value: string[]) => Path({
     value,
