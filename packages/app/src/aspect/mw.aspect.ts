@@ -15,7 +15,8 @@ export default class implements IAspect {
 
     around = middlewareToAround(async (ctx, next) => {
         console.log("****** mw before ******");
-        await next();
+        const result =  await next();
         console.log("****** mw after *******");
+        return result;
     });
 }

@@ -48,7 +48,7 @@ export default class Index extends BaseController {
     }
 
     @Get('/reg/:name*')
-    @Aspect.around('test')
+    @Aspect.around('mw')
     reg(@AgeCheck('age') age: number, @Param('name') name: string) {
         return Result.send(`this is reg router. ${name} ${age}`);
     }
