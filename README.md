@@ -3,7 +3,7 @@
 
 ## 简介
 
-Umajs-express是针对历史项目为express框架升级Umajs而开发的一个基于Umajs的适配工程，开发者可以通过express的application进行启动Umajs实例。逐步将新工程的路由切换为符合Umajs的开发规范的代码，通过Umajs-express编写的代码后期可以直接无缝将Umajs-express升级成Umajs.
+Umajs-express是针对历史项目为express框架升级Umajs而开发的一个基于Umajs的适配工程，开发者可以将Umajs集成到express项目中。逐步将新工程的路由切换为符合Umajs的开发规范的代码，通过Umajs-express编写的代码后期可以直接无缝将Umajs-express升级成Umajs.
 
 ## 使用方法
 
