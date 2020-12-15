@@ -25,10 +25,10 @@ Umajs-express高度保持Umajs使用方法，使用文档请参考： [Umajs使�
 - @umajs-express/arg-decorator 【单测 100%】
 
 ## 支持的插件（用法和Umajs保持一致）
-- @umajs-express/plugin-i18n 【单测 100%】
-- @umajs-express/plugin-session 【单测 100%】
-- @umajs-express/plugin-static 【单测 100%】
-- @umajs-express/plugin-views 【单测 100%】
+- @umajs-express/plugin-i18n 
+- @umajs-express/plugin-session 
+- @umajs-express/plugin-static 
+- @umajs-express/plugin-views 
 
 
 
