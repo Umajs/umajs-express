@@ -1,9 +1,12 @@
 import typeHelper from '../utils/typeHelper';
 import controllerInfo from '../info/controllerInfo';
 import { TMethodDecoratorParams, TClassDecoratorParams } from '../types/TDecorator';
-import { TPathObjArgs } from '../types/TPathArgs';
 import { RequestMethod } from '../types/RequestMethod';
 
+export type TPathObjArgs = {
+    value?: string | string[],
+    method?: RequestMethod | RequestMethod[],
+};
 /**
  * 路由装饰器
  * 可以装饰 class，作为跟路由，只装饰 class 不生效，必须和 method 装饰配合使用

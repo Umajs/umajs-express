@@ -1,6 +1,6 @@
 import { IRequest } from '../types/IRequest';
 import { IResponse } from '../types/IResponse';
-import { TMethodInfo } from '../types/TMethodInfo';
+import { TMethodInfo } from '../types/TControllerInfo';
 
 import Result from '../core/Result';
 import ControllerInfo from '../info/controllerInfo';

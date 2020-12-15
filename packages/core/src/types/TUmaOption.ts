@@ -4,7 +4,11 @@ import * as Express from 'express';
 
 import Uma from '../core/Uma';
 
-import { TJsonpBody } from './TJsonpBody';
+export type TJsonpBody = {
+    limit?: number,
+    replacer?: (this: any, key: string, value: any) => any,
+    space?: string | number,
+};
 
 export type TUmaOption = {
     Router: () => Express.Handler,
