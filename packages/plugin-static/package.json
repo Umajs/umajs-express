@@ -1,6 +1,6 @@
 {
   "name": "@umajs-express/plugin-static",
-  "version": "0.0.1",
+  "version": "1.2.0-beta",
   "description": "umajs static",
   "author": "zhangzhihua <zzh627@126.com>",
   "license": "MIT",
@@ -46,10 +46,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wuba/Umajs.git"
+    "url": "git+https://github.com/Umajs/umajs-express.git"
   },
   "bugs": {
-    "url": "https://github.com/wuba/Umajs/issues"
+    "url": "https://github.com/Umajs/umajs-express/issues"
   },
-  "homepage": "https://github.com/wuba/Umajs#readme"
+  "homepage": "https://github.com/Umajs/umajs-express#readme"
 }

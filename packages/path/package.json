@@ -44,10 +44,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wuba/Umajs.git"
+    "url": "git+https://github.com/Umajs/umajs-express.git"
   },
   "bugs": {
-    "url": "https://github.com/wuba/Umajs/issues"
+    "url": "https://github.com/Umajs/umajs-express/issues"
   },
-  "homepage": "https://github.com/wuba/Umajs#readme"
+  "homepage": "https://github.com/Umajs/umajs-express#readme",
+  "gitHead": "9d257fa5c7ad5e2898e310a9a927c06e31c0d2c5"
 }
