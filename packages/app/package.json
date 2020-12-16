@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "1.2.0-beta",
+  "version": "1.2.0-beta1",
   "private": true,
   "description": "> TODO: description",
   "author": "zhangzhihua <zzh627@126.com>",
@@ -22,14 +22,14 @@
     "app": "ts-node-dev --respawn src/app.ts"
   },
   "dependencies": {
-    "@umajs-express/arg-decorator": "^1.2.0-beta",
-    "@umajs-express/core": "^1.2.0-beta",
-    "@umajs-express/path": "^1.2.0-beta",
-    "@umajs-express/plugin-i18n": "^1.2.0-beta",
-    "@umajs-express/plugin-session": "^1.2.0-beta",
+    "@umajs-express/arg-decorator": "^1.2.0-beta1",
+    "@umajs-express/core": "^1.2.0-beta1",
+    "@umajs-express/path": "^1.2.0-beta1",
+    "@umajs-express/plugin-i18n": "^1.2.0-beta1",
+    "@umajs-express/plugin-session": "^1.2.0-beta1",
     "@umajs-express/plugin-static": "^0.0.1",
-    "@umajs-express/plugin-views": "^1.2.0-beta",
-    "@umajs-express/router": "^1.2.0-beta",
+    "@umajs-express/plugin-views": "^1.2.0-beta1",
+    "@umajs-express/router": "^1.2.0-beta1",
     "express": "^4.17.1",
     "nunjucks": "^3.2.0"
   },
